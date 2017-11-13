@@ -64,6 +64,7 @@ export default class TimeGrid extends Component {
 
     messages: PropTypes.object,
     components: PropTypes.object.isRequired,
+    calendarContentProps: PropTypes.object
   }
 
   static defaultProps = {
@@ -143,10 +144,11 @@ export default class TimeGrid extends Component {
         events
       , range
       , width
+      , calendarContentProps
       , startAccessor
       , endAccessor
       , allDayAccessor
-      , showMultiDayTimes} = this.props;
+      , showMultiDayTimes } = this.props;
 
     width = width || this.state.gutterWidth;
 
@@ -182,7 +184,7 @@ export default class TimeGrid extends Component {
 
         {this.renderHeader(range, allDayEvents, width)}
 
-        <div ref='content' className='rbc-time-content'>
+        <div ref='content' className='rbc-time-content' {...calendarContentProps}>
           <div ref='timeIndicator' className='rbc-current-time-indicator' />
 
           <TimeColumn
@@ -200,7 +202,7 @@ export default class TimeGrid extends Component {
     );
   }
 
-  renderEvents(range, events, today){
+  renderEvents(range, events, today) {
     let { min, max, endAccessor, startAccessor, components } = this.props;
 
     return range.map((date, idx) => {
@@ -250,7 +252,7 @@ export default class TimeGrid extends Component {
             className='rbc-label rbc-header-gutter'
             style={{ width }}
           />
-          { this.renderHeaderCells(range) }
+          {this.renderHeaderCells(range)}
         </div>
         <div className='rbc-row'>
           <div
@@ -258,7 +260,7 @@ export default class TimeGrid extends Component {
             className='rbc-label rbc-header-gutter'
             style={{ width }}
           >
-            { message(messages).allDay }
+            {message(messages).allDay}
           </div>
           <DateContentRow
             now={now}
@@ -287,7 +289,7 @@ export default class TimeGrid extends Component {
     )
   }
 
-  renderHeaderCells(range){
+  renderHeaderCells(range) {
     let { dayFormat, culture, components, getDrilldownView } = this.props;
     let HeaderComponent = components.header || Header
 
@@ -322,16 +324,16 @@ export default class TimeGrid extends Component {
               {header}
             </a>
           ) : (
-            <span>
-              {header}
-            </span>
-          )}
+              <span>
+                {header}
+              </span>
+            )}
         </div>
       )
     })
   }
 
-  handleHeaderClick(date, view, e){
+  handleHeaderClick(date, view, e) {
     e.preventDefault()
     notify(this.props.onDrillDown, [date, view])
   }
@@ -350,7 +352,7 @@ export default class TimeGrid extends Component {
     notify(this.props.onSelectEvent, args)
   }
 
-  clearSelection(){
+  clearSelection() {
     clearTimeout(this._selectTimer)
     this._pendingSelection = [];
   }
