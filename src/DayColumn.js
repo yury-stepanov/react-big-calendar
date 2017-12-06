@@ -63,6 +63,7 @@ class DayColumn extends React.Component {
     eventPropGetter: PropTypes.func,
     dayWrapperComponent: elementType,
     eventComponent: elementType,
+    eventComponentProps: PropTypes.object,
     eventWrapperComponent: elementType.isRequired,
   };
 
@@ -145,6 +146,7 @@ class DayColumn extends React.Component {
       , selected
       , messages
       , eventComponent
+      , eventComponentProps
       , eventTimeRangeFormat
       , eventTimeRangeStartFormat
       , eventTimeRangeEndFormat
@@ -223,7 +225,7 @@ class DayColumn extends React.Component {
             <div className='rbc-event-label'>{label}</div>
             <div className='rbc-event-content'>
               { EventComponent
-                ? <EventComponent event={event} title={title}/>
+                ? <EventComponent event={event} title={title} {...eventComponentProps}/>
                 : title
               }
             </div>
