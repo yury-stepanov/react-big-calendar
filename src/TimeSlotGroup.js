@@ -8,6 +8,7 @@ import { elementType, dateFormat } from './utils/propTypes'
 export default class TimeSlotGroup extends Component {
   static propTypes = {
     dayWrapperComponent: elementType,
+    dayWrapperComponentProps: PropTypes.object,
     timeslots: PropTypes.number.isRequired,
     step: PropTypes.number.isRequired,
     value: PropTypes.instanceOf(Date).isRequired,
@@ -25,12 +26,13 @@ export default class TimeSlotGroup extends Component {
   }
 
   renderSlice(slotNumber, content, value) {
-    const { dayWrapperComponent, showLabels, isNow, culture, slotPropGetter } = this.props;
+    const { dayWrapperComponent, dayWrapperComponentProps, showLabels, isNow, culture, slotPropGetter } = this.props;
     return (
       <TimeSlot
         key={slotNumber}
         slotPropGetter={slotPropGetter}
         dayWrapperComponent={dayWrapperComponent}
+        dayWrapperComponentProps={dayWrapperComponentProps}
         showLabel={showLabels && !slotNumber}
         content={content}
         culture={culture}
